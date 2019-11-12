@@ -57,8 +57,8 @@ def chromeShot (url,f,p=""):
 	
 	if p:
 		prox.proxy_type 	= ProxyType.MANUAL
-		prox.http_proxy 	= "127.0.0.1:8080"
-		prox.ssl_proxy 		= "127.0.0.1:8080"
+		prox.http_proxy 	= p
+		prox.ssl_proxy 		= p
 
 	capabilities = webdriver.DesiredCapabilities.CHROME
 	prox.add_to_capabilities(capabilities)
