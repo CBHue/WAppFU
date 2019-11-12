@@ -106,7 +106,10 @@ def main():
 			# Run ChromShot
 			if args.ScreenShot or args.allChecks:
 				f = OUTFile + "_screenShot_" + port + ".png"
-				chromeShot(u, f)
+				if args.proxy:
+					chromeShot(u, f, args.proxy)
+				else:	
+					chromeShot(u, f)
 
 			# Run Gobuster
 			if args.goBuster or args.allChecks:
@@ -152,8 +155,9 @@ if __name__ == "__main__":
     parser.add_argument("-e", "--nse",     		dest="nmapHTTP", 		help="run HTTP nse scripts",	action="store_true")
     parser.add_argument("-a", "--all",	 	 	dest="allChecks",		help="All checks",	 			action="store_true")
     
-    parser.add_argument("--discover",	dest="discover",  	help="discover http ports",  action="store_true")
     #parser.add_argument("--validate",	dest="validate",  	help="validate IPs",  	action="store_true")
+    parser.add_argument("--discover",	dest="discover",  	help="discover http ports",	action="store_true")
+    parser.add_argument("--proxy",		dest="proxy",  		help="http proxy")
     parser.add_argument("--urls", 		dest="urlFile",  	help="Target URLs")
 
     args = parser.parse_args()

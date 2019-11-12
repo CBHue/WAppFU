@@ -5,6 +5,7 @@ import urllib.parse
 from shutil import copy2
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.proxy import Proxy, ProxyType
 
 from utils.osWork import muxER
 from utils.osWork import muxERquiet
@@ -48,8 +49,19 @@ def goBuster(url,f):
 		cmd = "gobuster dir -q -l -k -e -u " + url + " --wordlist " + wList + " -o " + f
 	muxERquiet(cmd)
 
-def chromeShot (url,f):
+def chromeShot (url,f,p=""):
 	whine( "Taking Screenshot   : " + url , "debug")
+
+	prox = Proxy()
+	prox.proxy_type 	= ProxyType.MANUAL
+	
+	if p:
+		prox.proxy_type 	= ProxyType.MANUAL
+		prox.http_proxy 	= "127.0.0.1:8080"
+		prox.ssl_proxy 		= "127.0.0.1:8080"
+
+	capabilities = webdriver.DesiredCapabilities.CHROME
+	prox.add_to_capabilities(capabilities)
 
 	chrome_options = Options()
 	chrome_options.add_argument("--headless")
@@ -63,7 +75,7 @@ def chromeShot (url,f):
 	chrome_driver = "/usr/bin/chromedriver"
 
 	try:
-		driver = webdriver.Chrome(options=chrome_options, executable_path=chrome_driver)
+		driver = webdriver.Chrome(options=chrome_options, executable_path=chrome_driver, desired_capabilities=capabilities)
 		driver.set_page_load_timeout(3)
 		driver.get(url)
 		driver.get_screenshot_as_file(f)
