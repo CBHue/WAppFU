@@ -77,7 +77,7 @@ def chromeShot (url,f,p=""):
 	# Copy to dedicated screenshot directory
 	sDir = os.path.dirname(f)
 	sDir = os.path.dirname(sDir)
-	sDir += "/screenshot/"
+	sDir += "/ScreenShots/"
 	if not os.path.exists(sDir):
 		os.makedirs(sDir)
 	
@@ -89,7 +89,7 @@ def chromeShot (url,f,p=""):
 		driver.get(url)
 		driver.get_screenshot_as_file(f)
 		# Copy to dedicated screenshot directory
-		copy2(f, sDir)
+		#copy2(f, sDir)
 		driver.quit()
 	except Exception as e:
 		whine("screenshot Error:" + str(e), "debug")
