@@ -74,13 +74,20 @@ def chromeShot (url,f,p=""):
 
 	chrome_driver = "/usr/bin/chromedriver"
 
+	# Copy to dedicated screenshot directory
+	sDir = os.path.dirname(f)
+	sDir = os.path.dirname(sDir)
+	sDir += "/screenshot/"
+	if not os.path.exists(sDir):
+		os.makedirs(sDir)
+	
 	try:
 		driver = webdriver.Chrome(options=chrome_options, executable_path=chrome_driver, desired_capabilities=capabilities)
 		driver.set_page_load_timeout(3)
 		driver.get(url)
 		driver.get_screenshot_as_file(f)
 		# Copy to dedicated screenshot directory
-		#copy2(f, "/home/cb/Dev/wAppFu/")
+		copy2(f, sDir)
 		driver.quit()
 	except Exception as e:
 		whine("screenshot Error:" + str(e), "debug")
