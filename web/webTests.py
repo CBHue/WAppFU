@@ -81,7 +81,7 @@ def chromeShot (url,f,p=""):
 	if not os.path.exists(sDir):
 		os.makedirs(sDir)
 	
-	f = sDir + urllib.parse.quote(url, safe='')
+	f = sDir + urllib.parse.quote(url, safe='') + ".png"
 
 	try:
 		driver = webdriver.Chrome(options=chrome_options, executable_path=chrome_driver, desired_capabilities=capabilities)
