@@ -83,7 +83,7 @@ def chromeShot (url,f,p=""):
 	
 	try:
 		driver = webdriver.Chrome(options=chrome_options, executable_path=chrome_driver, desired_capabilities=capabilities)
-		driver.set_page_load_timeout(3)
+		driver.set_page_load_timeout(10)
 		driver.get(url)
 		driver.get_screenshot_as_file(f)
 		# Copy to dedicated screenshot directory
