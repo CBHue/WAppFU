@@ -81,6 +81,8 @@ def chromeShot (url,f,p=""):
 	if not os.path.exists(sDir):
 		os.makedirs(sDir)
 	
+	f = sDir + urllib.parse.quote(url, safe='')
+
 	try:
 		driver = webdriver.Chrome(options=chrome_options, executable_path=chrome_driver, desired_capabilities=capabilities)
 		driver.set_page_load_timeout(10)
