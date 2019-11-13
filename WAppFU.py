@@ -11,7 +11,6 @@ import utils.heading
 import web.webTests
 import utils.helper as helper
 
-from web.webTests import webTests
 from web.webTests import chromeShot
 from web.webTests import goBuster
 from web.webTests import msfHTTPAuxilary

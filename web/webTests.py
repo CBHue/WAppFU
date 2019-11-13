@@ -12,11 +12,6 @@ from utils.osWork import muxERquiet
 from utils.osWork import realTimeMuxER
 from utils.helper import whine
 
-def webTests (urls, o):
-	tURL = len(urls)
-	cURL = 0
-	whine("Running Web Tests on " + str(tURL) + " URL(s)", "info")
-
 def nmapHTTP(host,port,output):
 	whine( "nMap HTTP Modules   : " + host + " Port: " + port , "debug")
 	cmd = "nmap -Pn --script discovery,vuln,version " + host + " -p " + port + " -oA " + output
@@ -81,7 +76,7 @@ def chromeShot (url,f,p=""):
 	if not os.path.exists(sDir):
 		os.makedirs(sDir)
 	
-	f = sDir + urllib.parse.quote(url, safe='') + ".png"
+	sf = sDir + urllib.parse.quote(url, safe='') + ".png"
 
 	try:
 		driver = webdriver.Chrome(options=chrome_options, executable_path=chrome_driver, desired_capabilities=capabilities)
@@ -89,7 +84,7 @@ def chromeShot (url,f,p=""):
 		driver.get(url)
 		driver.get_screenshot_as_file(f)
 		# Copy to dedicated screenshot directory
-		#copy2(f, sDir)
+		copy2(f, sf)
 		driver.quit()
 	except Exception as e:
 		whine("screenshot Error:" + str(e), "debug")
