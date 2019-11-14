@@ -113,22 +113,33 @@ def main():
 			# Run Gobuster
 			if args.goBuster or args.allChecks:
 				f = OUTFile + "_gobuster_vv_" + port + ".txt"
-				goBuster(u, f)
-			
+				if args.proxy:
+					goBuster(u, f, args.proxy)
+				else:
+					goBuster(u, f)
 			# Run dirbuster
 			if args.dirb or args.allChecks:			
 				f = OUTFile + "_dirb_" + port + ".txt"
-				dirb(u, f)
+				if args.proxy:
+					dirb(u, f, args.proxy)
+				else:
+					dirb(u, f)
 			
 			# Metesploit Safe Checks
 			if args.msfHTTPAuxilary or args.allChecks:
-				f = hstDIR + "_" + port + "_" 
-				msfHTTPAuxilary(host,port,f)
+				f = hstDIR + "_" + port + "_"
+				if args.proxy:
+					msfHTTPAuxilary(host,port,f,args.proxy)
+				else:
+					msfHTTPAuxilary(host,port,f)
 
 			# Run nikto
 			if args.nikto or args.allChecks:
 				f = OUTFile + "_nikto_" + port + ".txt"
-				nikto(u, f)
+				if args.proxy:
+					nikto(u, f, args.proxy)
+				else:	
+					nikto(u, f)
 
 			# Run nMap HTTP
 			if args.nmapHTTP or args.allChecks:
