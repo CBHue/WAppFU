@@ -12,23 +12,30 @@ from utils.osWork import muxERquiet
 from utils.osWork import realTimeMuxER
 from utils.helper import whine
 
-def nmapHTTP(host,port,output):
+def nmapHTTP(host,port,output,p=""):
 	whine( "nMap HTTP Modules   : " + host + " Port: " + port , "debug")
 	cmd = "nmap -Pn --script discovery,vuln,version " + host + " -p " + port + " -oA " + output
+	if p:
+		cmd = "nmap -Pn --script discovery,vuln,version --proxies " + p + " " + host + " -p " + port + " -oA " + output
 	muxERquiet(cmd)
 
-def nikto(url,f):
+def nikto(url,f,p=""):
 	whine( "Running nikto       : " + url , "debug")
+
 	cmd = "nikto -Cgidirs all -nointeractive -ask no -maxtime 1h -host " + url + " -Format txt -output " + f
+	if p:
+		cmd = "nikto -Cgidirs all -nointeractive -ask no -maxtime 1h --useproxy " + p + " -host " + url + " -Format txt -output " + f
 	muxERquiet(cmd)
 
-def dirb(url,f):
+def dirb(url,f,p=""):
 	whine( "Running dirb        : " + url , "debug")
 	wList = os.path.abspath(os.path.dirname(__file__)) + "/wordlists/master-dirb.txt"
 	cmd = "dirb " + url + " " + wList + " -l -o " + f 
+	if p:
+		cmd = "dirb " + url + " " + wList + " -l -p " + p + " -o " + f 
 	muxERquiet(cmd)
 
-def goBuster(url,f):
+def goBuster(url,f,p=""):
 	whine( "Running gobuster    : " + url , "debug")
 	wList = os.path.abspath(os.path.dirname(__file__)) + "/../web/wordlists/master-gobuster.txt"
 	
@@ -39,9 +46,14 @@ def goBuster(url,f):
 	if mv:
 		f = f.replace("vv", "v2")
 		cmd = "gobuster -q -l -k -e -u " + url + " -w " + wList + " -o " + f
+		if p:
+			cmd = "gobuster -q -l -k -e -p " + p + " -u " + url + " -w " + wList + " -o " + f
+
 	else:
 		f = f.replace("vv", "v3")
 		cmd = "gobuster dir -q -l -k -e -u " + url + " --wordlist " + wList + " -o " + f
+		if p:
+			cmd = "gobuster dir -q -l -k -e -p " + p + " -u " + url + " --wordlist " + wList + " -o " + f
 	muxERquiet(cmd)
 
 def chromeShot (url,f,p=""):
@@ -89,7 +101,7 @@ def chromeShot (url,f,p=""):
 	except Exception as e:
 		whine("screenshot Error:" + str(e), "debug")
 
-def msfHTTPAuxilary(host,port,output):
+def msfHTTPAuxilary(host,port,output,p=""):
 	whine( "Metasploit Modules  : " + host + " Port: " + port , "debug")
 
 	import ast
@@ -108,4 +120,7 @@ def msfHTTPAuxilary(host,port,output):
 		whine( "Metasploit Module   : " + module, "debug")
 		f = output + "_Metasploit_" + m + ".txt"
 		cmd = "msfconsole -x \"use  " + module + ";set rhosts " + host + ";set rport " + port + "; run; exit\" > " + f
+		if p:
+			cmd = "msfconsole -x \"use  " + module + ";set proxies " + p + ";set rhosts " + host + ";set rport " + port + "; run; exit\" > " + f
+		print (cmd)
 		muxERquiet(cmd)
