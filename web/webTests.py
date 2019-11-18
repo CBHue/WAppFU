@@ -17,6 +17,7 @@ def nmapHTTP(host,port,output,p=""):
 	cmd = "nmap -Pn --script discovery,vuln,version " + host + " -p " + port + " -oA " + output
 	if p:
 		cmd = "nmap -Pn --script discovery,vuln,version --proxies " + p + " " + host + " -p " + port + " -oA " + output
+	print(cmd)
 	muxERquiet(cmd)
 
 def nikto(url,f,p=""):
