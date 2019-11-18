@@ -5,6 +5,7 @@ import utils.helper as helper
 
 def portScanner (host, file):
 	cmd = "nmap -sS -n --randomize-hosts --max-retries 1 -p- --data-length=0 --open " + host + " -oA " + file + " > " + file + ".out"
+	print(cmd)
 	muxER(cmd)
 
 	f = file + ".gnmap"
