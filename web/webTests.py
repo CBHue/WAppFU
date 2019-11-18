@@ -46,9 +46,9 @@ def goBuster(url,f,p=""):
 	mv = re.search(r'Version: 2.*',r)
 	if mv:
 		f = f.replace("vv", "v2")
-		cmd = "gobuster -q -l -k -e -u " + url + " -w " + wList + " -o " + f
+		cmd = "gobuster -q -l -f -k -e -u " + url + " -w " + wList + " -o " + f
 		if p:
-			cmd = "gobuster -q -l -k -e -p " + p + " -u " + url + " -w " + wList + " -o " + f
+			cmd = "gobuster -q -l -f -k -e -p " + p + " -u " + url + " -w " + wList + " -o " + f
 
 	else:
 		f = f.replace("vv", "v3")
