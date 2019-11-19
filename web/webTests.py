@@ -31,9 +31,9 @@ def nikto(url,f,p=""):
 def dirb(url,f,p=""):
 	whine( "Running dirb        : " + url , "debug")
 	wList = os.path.abspath(os.path.dirname(__file__)) + "/wordlists/master-dirb.txt"
-	cmd = "dirb " + url + " " + wList + " -l -o " + f 
+	cmd = "dirb " + url + " " + wList + " -l -r -o " + f 
 	if p:
-		cmd = "dirb " + url + " " + wList + " -l -p " + p + " -o " + f 
+		cmd = "dirb " + url + " " + wList + " -l -r -p " + p + " -o " + f 
 	muxERquiet(cmd)
 
 def goBuster(url,f,p=""):
